@@ -1,0 +1,41 @@
+project_name: tokcount
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: tokcount
+    main: .
+    binary: tokcount
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - arm64
+
+archives:
+  - id: default
+    formats:
+      - tar.gz
+
+checksum:
+  name_template: checksums.txt
+
+brews:
+  - name: tokcount
+    homepage: https://github.com/Napageneral/tokcount
+    description: Count tokens in repositories for AI context and pricing estimates
+    license: MIT
+    repository:
+      owner: Napageneral
+      name: tap
+    directory: Formula
+
+release:
+  github:
+    owner: Napageneral
+    name: tokcount
