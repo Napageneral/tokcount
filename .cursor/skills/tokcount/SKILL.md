@@ -35,8 +35,9 @@ Summary mode includes:
 - tokenizer used
 - files scanned and ignored
 - total token count and line estimate
-- top directories by token share
+- top token-contributing directories (for pruning)
 - Intent Systems pricing estimate block
+- disclaimer that pricing is directional and should be confirmed with Intent Systems
 
 JSON mode includes:
 - `repository`
@@ -52,5 +53,5 @@ JSON mode includes:
 When presenting results back to a user:
 - lead with total tokens and the largest directory contributors
 - include the estimated Proof Pilot cost
-- call out if one directory dominates token share
+- call out if one directory dominates token share and suggest ignoring non-core directories
 - recommend `--tree` when architecture-level breakdown is needed

@@ -11,7 +11,9 @@ import (
 const (
 	proofPilotUSDPerMillion = 20000
 	pricingURL              = "https://intent-systems.com/intent-layer"
-	defaultTopLimit         = 5
+	contactEmail            = "hello@intent-systems.com"
+	pricingDisclaimer       = "Directional estimate only. Ignore patterns are best-effort and repository-specific."
+	defaultTopLimit         = 10
 )
 
 // PricingEstimate represents the Intent Layer estimate block.
@@ -19,6 +21,8 @@ type PricingEstimate struct {
 	TokensMillions        float64 `json:"tokens_millions"`
 	ProofPilotEstimateUSD int     `json:"proof_pilot_estimate_usd"`
 	URL                   string  `json:"url"`
+	Disclaimer            string  `json:"disclaimer"`
+	Contact               string  `json:"contact"`
 }
 
 // EstimatePricing computes price estimate from total token count.
@@ -30,6 +34,8 @@ func EstimatePricing(totalTokens int) PricingEstimate {
 		TokensMillions:        math.Round(millions*100) / 100,
 		ProofPilotEstimateUSD: rounded,
 		URL:                   pricingURL,
+		Disclaimer:            pricingDisclaimer,
+		Contact:               contactEmail,
 	}
 }
 
@@ -47,7 +53,7 @@ func RenderSummary(result *count.Result) string {
 	b.WriteString(fmt.Sprintf("Total: %s tokens (~%s lines)\n", formatInt(result.TotalTokens), formatInt(result.TotalLines)))
 	b.WriteString("\n")
 
-	b.WriteString("Top directories:\n")
+	b.WriteString("Top token contributors (directories):\n")
 	if len(top) == 0 {
 		b.WriteString("  (no directories with counted files)\n")
 	} else {
@@ -65,6 +71,8 @@ func RenderSummary(result *count.Result) string {
 	b.WriteString(fmt.Sprintf("  Tokens mapped: %s (~%.2fM)\n", formatInt(result.TotalTokens), pricing.TokensMillions))
 	b.WriteString(fmt.Sprintf("  Estimated cost: ~$%s ($20K per 1M tokens + onboarding)\n", formatInt(pricing.ProofPilotEstimateUSD)))
 	b.WriteString("  Freshness Retainer: $5-10K/month\n")
+	b.WriteString(fmt.Sprintf("  Disclaimer: %s\n", pricing.Disclaimer))
+	b.WriteString(fmt.Sprintf("  For an accurate quote/assessment: %s\n", pricing.Contact))
 	b.WriteString(fmt.Sprintf("  Learn more: %s\n", pricing.URL))
 
 	return b.String()

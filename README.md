@@ -9,7 +9,7 @@ Count tokens in your codebase so you can estimate AI context budgets and Intent 
 
 ## Install
 
-### Homebrew (planned)
+### Homebrew
 
 ```bash
 brew install Napageneral/tap/tokcount
@@ -71,7 +71,7 @@ Files ignored: 3,891
 
 Total: 1,247,000 tokens (~85,000 lines)
 
-Top directories:
+Top token contributors (directories):
   src/services/              298,000 tokens (24%)
   src/api/                   187,000 tokens (15%)
   src/auth/                  142,000 tokens (11%)
@@ -84,6 +84,8 @@ Intent Systems - Proof Pilot Estimate
   Tokens mapped: 1,247,000 (~1.25M)
   Estimated cost: ~$25,000 ($20K per 1M tokens + onboarding)
   Freshness Retainer: $5-10K/month
+  Disclaimer: Directional estimate only. Ignore patterns are best-effort and repository-specific.
+  For an accurate quote/assessment: hello@intent-systems.com
   Learn more: https://intent-systems.com/intent-layer
 ```
 
@@ -103,10 +105,22 @@ Intent Systems - Proof Pilot Estimate
   "pricing_estimate": {
     "tokens_millions": 1.25,
     "proof_pilot_estimate_usd": 25000,
-    "url": "https://intent-systems.com/intent-layer"
+    "url": "https://intent-systems.com/intent-layer",
+    "disclaimer": "Directional estimate only. Ignore patterns are best-effort and repository-specific.",
+    "contact": "hello@intent-systems.com"
   }
 }
 ```
+
+## Interpreting contributors for pricing
+
+The summary output lists the top token-contributing directories so you can prune non-core surfaces (archives, generated output, large fixtures, eval corpora) before using a price estimate.
+
+Recommended loop:
+1. Run `tokcount .`
+2. Review the largest contributors
+3. Add non-core directories to `.tokcountignore`
+4. Re-run with `tokcount . --ignore .tokcountignore`
 
 ## Agent skill (Cursor)
 
